@@ -1,22 +1,28 @@
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from clint import Ui_MainWindow
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtGui import QIcon
 
-class Example(QWidget):
+
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-        self.initUI()
-    
-    def initUI(self):
-        self.setGeometry(300, 300, 300, 220)
-        self.setWindowTitle('Icon')
-        self.setWindowIcon(QIcon('web.png'))
+        send_request_btn = self.ui.sendRequestPushButton
+        
+        send_request_btn.setCheckable(True)
+        send_request_btn.clicked.connect(self.send_request)
 
-        self.show()
+    def send_request(self):
+        self.ui.cancelRequestPushButton.setVisible(True)
+        self.ui.label_2.setVisible(True)
+        self.ui.progressBar.setVisible(True)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ex = Example()
+    window = MainWindow()
+    window.show()
 
-    sys.exit(app.exec_())
+    app.exec()
